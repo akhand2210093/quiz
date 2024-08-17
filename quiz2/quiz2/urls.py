@@ -21,3 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('myapp.urls')),
 ]
+
+# {
+#   "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzMzYxMjE3LCJpYXQiOjE3MjMzNjA5MTcsImp0aSI6ImNhYmE5MGNjNDMyYzQzYjNhMGVkZDU2OWM0YzUxODk2IiwidXNlcl9pZCI6Mn0.iydwuPZKOdcpO33ay8Ur529bLXhTC-MXcPUeuC60mxc",
+#   "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyMzQ0NzMxNywiaWF0IjoxNzIzMzYwOTE3LCJqdGkiOiIxYTk2Y2RkODYxY2Q0OGQ5OWQ0OGM3NjVjNDhlNDdiMCIsInVzZXJfaWQiOjJ9.ITi68dXhJjOCoFKWP3LGfrFFYRWDT0e9nBWUfq9tzM8"
+# }

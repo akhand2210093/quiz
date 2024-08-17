@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.settings import api_settings
 from django.core.mail import send_mail
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
 from .models import TemporaryLogin, Question, UserResponse, UserScore
 from .serializers import StepOneSerializer, StepTwoSerializer, QuestionSerializer, UserResponseSerializer, UserScoreSerializer, QuestionCreateSerializer
@@ -33,12 +34,16 @@ class StepTwoView(APIView):
             otp = serializer.validated_data['otp']
             temp_login = get_object_or_404(TemporaryLogin, email=email, otp=otp)
             if temp_login.otp_is_valid():
+                # # Generate JWT token
+                # jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+                # jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+                # payload = jwt_payload_handler(temp_login)
+                # token = jwt_encode_handler(payload)
+                # return Response({'token': token}, status=status.HTTP_200_OK)
                 # Generate JWT token
-                jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-                jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-                payload = jwt_payload_handler(temp_login)
-                token = jwt_encode_handler(payload)
-                return Response({'token': token}, status=status.HTTP_200_OK)
+                refresh = RefreshToken.for_user(temp_login)
+                access_token = str(refresh.access_token)
+                return Response({'access': access_token, 'refresh': str(refresh)}, status=status.HTTP_200_OK)
             else:
                 return Response({'message': 'OTP is invalid or expired'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
